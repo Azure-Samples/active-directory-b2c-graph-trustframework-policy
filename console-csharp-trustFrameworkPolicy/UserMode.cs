@@ -17,6 +17,7 @@ namespace console_csharp_trustframeworkpolicy
             {
                 //*********************************************************************
                 // setup Microsoft Graph Client for delegated user.
+                //
                 //*********************************************************************
                 if (Constants.ClientIdForUserAuthn != "ENTER_YOUR_CLIENT_ID")
                 {
