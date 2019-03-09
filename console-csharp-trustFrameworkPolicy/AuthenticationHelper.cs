@@ -15,7 +15,7 @@ namespace console_csharp_trustframeworkpolicy
         // By public preview, this API will require Policy.ReadWrite.All permission as an admin-only scope,
         // so authorization will fail if you sign in with a non-admin account.
         // For now, this API is only accessible on tenants that have been whitelisted
-        public static string[] Scopes = { "User.Read" };
+        public static string[] Scopes = { "Policy.ReadWrite.TrustFramework" };
 
         public static PublicClientApplication IdentityClientApp = new PublicClientApplication(Constants.ClientIdForUserAuthn);
         public static string TokenForUser = null;
