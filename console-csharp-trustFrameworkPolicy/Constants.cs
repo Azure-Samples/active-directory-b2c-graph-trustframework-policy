@@ -4,7 +4,6 @@
     {
         // TODO: update "ClientIdForUserAuthn" with your app guid and "Tenant" with your tenant name
         //       see README.md for instructions
-
         // Client ID is the application guid used uniquely identify itself to the v2.0 authentication endpoint
         public const string ClientIdForUserAuthn = "ENTER_YOUR_CLIENT_ID";
         // Your tenant Name, for example "myb2ctenant.onmicrosoft.com"
@@ -15,7 +14,11 @@
         public const string RedirectUriForAppAuthn = "https://login.microsoftonline.com";
 
         // leave these as-is - Private Preview Graph URIs for custom trust framework policy
-        public const string TrustFrameworkPolicesUri = "https://graph.microsoft.com/testcpimtf/trustFrameworkPolicies";
+        public const string TrustFrameworkPolicesUri = "https://graph.microsoft.com/beta/trustFramework/policies";
         public const string TrustFrameworkPolicyByIDUri = "https://graph.microsoft.com/testcpimtf/trustFrameworkPolicies/{0}/$value";
+        public const string TrustFrameworkKeysetsUri = "https://graph.microsoft.com/beta/trustframework/keysets";
+        public const string TrustFrameworkKeysetsByIDUri = "https://graph.microsoft.com/beta/trustframework/keysets/{0}";
+        public static string[] ResourceUri = { TrustFrameworkPolicesUri, TrustFrameworkKeysetsUri };
+        public static string[] IdUri = { TrustFrameworkPolicyByIDUri, TrustFrameworkKeysetsByIDUri };
     }
 }

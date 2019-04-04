@@ -11,11 +11,10 @@ namespace console_csharp_trustframeworkpolicy
 {
     class AuthenticationHelper
     {
-        // The test endpoint currently does not require a specific scope.
-        // By public preview, this API will require Policy.ReadWrite.All permission as an admin-only scope,
-        // so authorization will fail if you sign in with a non-admin account.
-        // For now, this API is only accessible on tenants that have been whitelisted
-        public static string[] Scopes = { "User.Read" };
+        // public preview, this API will require Policy.ReadWrite.TrustFramework and TrustFrameworkKeySet.ReadWrite.Allpermission as an admin-only scope,
+        // to manage keysets you will also need 
+        // so authorization will fail if you sign in with a non-admin account.        // For now, this API is only accessible on tenants that have been whitelisted
+        public static string[] Scopes = { "User.Read", "Policy.ReadWrite.TrustFramework", "TrustFrameworkKeySet.ReadWrite.All" };
 
         public static PublicClientApplication IdentityClientApp = new PublicClientApplication(Constants.ClientIdForUserAuthn);
         public static string TokenForUser = null;
