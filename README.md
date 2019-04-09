@@ -6,11 +6,11 @@ This is a sample command line tool that demonstrates managing custom trust frame
 
 This sample demonstrates the following:
 
-* **Create** a custom policy or Keyset
-* **Read** details of a custom policy or Keyset
-* **Update** a custom policy or Keyset
-* **Delete** a custom policy or Keyset
-* **List** all custom policies or Keyset
+* **Create** a custom policy
+* **Read** details of a custom policy
+* **Update** a custom policy
+* **Delete** a custom policy
+* **List** all custom policies
 
 ## Getting Started
 
