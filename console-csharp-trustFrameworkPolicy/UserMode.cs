@@ -10,7 +10,7 @@ namespace console_csharp_trustframeworkpolicy
     {
         public static GraphServiceClient client;
 
-
+        internal static string ContentType = "application/xml";
         public static bool CreateGraphClient()
         {
             try
@@ -18,19 +18,8 @@ namespace console_csharp_trustframeworkpolicy
                 //*********************************************************************
                 // setup Microsoft Graph Client for delegated user.
                 //*********************************************************************
-                if (Constants.ClientIdForUserAuthn != "ENTER_YOUR_CLIENT_ID")
-                {
-                    client = AuthenticationHelper.GetAuthenticatedClientForUser();
-                    return true;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You haven't configured a value for ClientIdForUserAuthn in Constants.cs. Please follow the Readme instructions for configuring this application.");
-                    Console.ResetColor();
-                    Console.ReadKey();
-                    return false;
-                }
+                client = AuthenticationHelper.GetAuthenticatedClientForUser();
+                return true;
             }
             catch (Exception ex)
             {
@@ -68,7 +57,7 @@ namespace console_csharp_trustframeworkpolicy
             string uriWithID = String.Format(uri, id);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uriWithID);
             AuthenticationHelper.AddHeaders(request);
-            request.Content = new StringContent(xml, Encoding.UTF8, "application/xml");
+            request.Content = new StringContent(xml, Encoding.UTF8, ContentType);
             return request;
         }
 
@@ -76,7 +65,7 @@ namespace console_csharp_trustframeworkpolicy
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
             AuthenticationHelper.AddHeaders(request);
-            request.Content = new StringContent(xml, Encoding.UTF8, "application/xml");
+            request.Content = new StringContent(xml, Encoding.UTF8, ContentType);
             return request;
         }
 

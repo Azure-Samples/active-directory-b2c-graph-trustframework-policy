@@ -8,49 +8,44 @@ namespace console_csharp_trustframeworkpolicy
 {
     class Program
     {
-        static string resource = "POLICY";
-        static string command = "LIST";
-        static string[] commands = { "LIST", "GET", "CREATE", "UPDATE", "DELETE" };
-        static string[] resources = { "POLICY", "KEYSET"};
-        static int uriIndex = 0;
         static void Main(string[] args)
         {
             // validate parameters
             if (!CheckValidParameters(args))
                 return;
 
-            
             HttpRequestMessage request = null;
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            
+
             try
             {
                 // Login as global admin of the Azure AD B2C tenant
                 UserMode.LoginAsAdmin();
+
                 // Graph client does not yet support trustFrameworkPolicy, so using HttpClient to make rest calls
-                switch (command.ToUpper())
+                switch (args[0].ToUpper())
                 {
                     case "LIST":
                         // List all polcies using "GET /trustFrameworkPolicies"
-                        request = UserMode.HttpGet(Constants.ResourceUri[uriIndex]);
+                        request = UserMode.HttpGet(Constants.TrustFrameworkPolicesUri);
                         break;
                     case "GET":
                         // Get a specific policy using "GET /trustFrameworkPolicies/{id}"
-                        request = UserMode.HttpGetID(Constants.ResourceUri[uriIndex], args[1]);
+                        request = UserMode.HttpGetID(Constants.TrustFrameworkPolicyByIDUri, args[1]);
                         break;
                     case "CREATE":
                         // Create a policy using "POST /trustFrameworkPolicies" with XML in the body
                         string xml = System.IO.File.ReadAllText(args[1]);
-                        request = UserMode.HttpPost(Constants.ResourceUri[uriIndex], xml);
+                        request = UserMode.HttpPost(Constants.TrustFrameworkPolicesUri, xml);
                         break;
                     case "UPDATE":
                         // Update using "PUT /trustFrameworkPolicies/{id}" with XML in the body
                         xml = System.IO.File.ReadAllText(args[2]);
-                        request = UserMode.HttpPutID(Constants.ResourceUri[uriIndex], args[1], xml);
+                        request = UserMode.HttpPutID(Constants.TrustFrameworkPolicyByIDUri, args[1], xml);
                         break;
                     case "DELETE":
                         // Delete using "DELETE /trustFrameworkPolicies/{id}"
-                        request = UserMode.HttpDeleteID(Constants.ResourceUri[uriIndex], args[1]);
+                        request = UserMode.HttpDeleteID(Constants.TrustFrameworkPolicyByIDUri, args[1]);
                         break;
                     default:
                         return;
@@ -70,10 +65,6 @@ namespace console_csharp_trustframeworkpolicy
             }
         }
 
-        public void GetGraphUri()
-        {
-
-        }
         public static bool CheckValidParameters(string[] args)
         {
             if (Constants.ClientIdForUserAuthn.Equals("ENTER_YOUR_CLIENT_ID") ||
@@ -91,68 +82,43 @@ namespace console_csharp_trustframeworkpolicy
                 Console.ReadKey();
                 return false;
             }
-            List<string> argList = new List<string>(args);
-            if (args == null)
-            {
-                Print("Passing default parameters Resource: POLICY and Command: LIST");
-                return true;
-            }
-            else if (args.Length == 0)
-            { 
-                argList.Add("LIST");
-            }
-            for(int i=0;i<args.Length;i++)
-            {
-                //we dont care after the first 2 parameters
-                if (i > 1)
-                    break;
-                //determin which 
-                if (Array.Exists<string>(resources, k => k.Equals(args[i].ToUpper())))
-                {
-                    resource = args[i].ToUpper();
-                    argList.RemoveAt(i);
-                }
-                if (Array.Exists<string>(commands, m => m.Equals(args[i].ToUpper())))
-                {
-                    command = args[i].ToUpper();
-                }
-                
-            }
-            if (resource == "KEYSET")
-            {
-                uriIndex = 1;
-            }
-            Print("Received parameters " + string.Join(" ", args));
-            Print("massaged parameters " + string.Join(" ", argList.ToArray()));
-            Print(string.Format("Inferred resource {0} and command {1} and index uri {2}", resource, command, uriIndex));
 
-            switch (command)
+            if (args.Length <= 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Please enter a command as the first argument.");
+                Console.ForegroundColor = ConsoleColor.White;
+                PrintHelp(args);
+                return false;
+            }
+
+            switch (args[0].ToUpper())
             {
                 case "LIST":
                     break;
                 case "GET":
-                    if (argList.Count <= 1)
+                    if (args.Length <= 1)
                     {
                         PrintHelp(args);
                         return false;
                     }
                     break;
                 case "CREATE":
-                    if (argList.Count <= 1)
+                    if (args.Length <= 1)
                     {
                         PrintHelp(args);
                         return false;
                     }
                     break;
                 case "UPDATE":
-                    if (argList.Count <= 2)
+                    if (args.Length <= 2)
                     {
                         PrintHelp(args);
                         return false;
                     }
                     break;
                 case "DELETE":
-                    if (argList.Count <= 1)
+                    if (args.Length <= 1)
                     {
                         PrintHelp(args);
                         return false;
@@ -168,26 +134,7 @@ namespace console_csharp_trustframeworkpolicy
                     PrintHelp(args);
                     return false;
             }
-
-           
-            
-
             return true;
-        }
-
-        public static void Print(string print)
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(print);
-            
-        }
-
-        public static void PrintError(string print, params string[] args)
-        {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(print);
-                Console.ForegroundColor = ConsoleColor.White;
-                PrintHelp(args);
         }
 
         public static void Print(Task<HttpResponseMessage> responseTask)
@@ -208,7 +155,7 @@ namespace console_csharp_trustframeworkpolicy
 
         public static void Print(HttpRequestMessage request)
         {
-            if(request != null)
+            if (request != null)
             {
                 Console.Write(request.Method + " ");
                 Console.WriteLine(request.RequestUri);
@@ -222,29 +169,21 @@ namespace console_csharp_trustframeworkpolicy
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("- Square brackets indicate optional arguments");
             Console.WriteLine("");
-            Console.WriteLine("REQUIRED Parameters  1 - Resource: Policy (default), Keyset ");
-            Console.WriteLine("REQUIRED Parameters  2 - Command: List (default), Get, Create, Update, delete");
-            Console.WriteLine("Optional Parameters  3 - Id: Policy ID, Keyset ID");
-            Console.WriteLine("Optional Parameters  4 - Relative File Path: For Policy Xml File, For Keyset Json File");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("List (default)               : {0} Policy|Keyset List", appName);
-            Console.WriteLine("Get                          : {0} Policy|Keyset Get [PolicyID]", appName);
-            Console.WriteLine("                             : {0} Policy Get B2C_1A_PolicyName", appName);
-            Console.WriteLine("                             : {0} Keyset Get B2C_1A_GoogleSecret", appName);
-            Console.WriteLine("Create                       : {0} Policy|Keyset Create [RelativePathTo(XML|Json)]", appName);
-            Console.WriteLine("                             : {0} Policy Create policy.xml", appName);
-            Console.WriteLine("                             : {0} Keyset Create keyset.json", appName);
-            Console.WriteLine("Update                       : {0} Policy|Keyset Update [PolicyID] [RelativePathToXML]", appName);
-            Console.WriteLine("                             : {0} Policy|Keyset Update B2C_1A_PolicyName updatepolicy.xml", appName);
-            Console.WriteLine("                             : {0} Keyset Update B2C_1A_GoogleSecret keyset.json", appName);
-            Console.WriteLine("Delete                       : {0} Policy|Keyset Delete [PolicyID|KeyId]", appName);
-            Console.WriteLine("                             : {0} Policy Delete B2C_1A_PolicyName", appName);
-            Console.WriteLine("                             : {0} Keyset Delete B2C_1A_Secret", appName);
+            Console.WriteLine("List                         : {0} List", appName);
+            Console.WriteLine("Get                          : {0} Get [PolicyID]", appName);
+            Console.WriteLine("                             : {0} Get B2C_1A_PolicyName", appName);
+            Console.WriteLine("Create                       : {0} Create [RelativePathToXML]", appName);
+            Console.WriteLine("                             : {0} Create policytemplate.xml", appName);
+            Console.WriteLine("Update                       : {0} Update [PolicyID] [RelativePathToXML]", appName);
+            Console.WriteLine("                             : {0} Update B2C_1A_PolicyName updatepolicy.xml", appName);
+            Console.WriteLine("Delete                       : {0} Delete [PolicyID]", appName);
+            Console.WriteLine("                             : {0} Delete B2C_1A_PolicyName", appName);
             Console.WriteLine("Help                         : {0} Help", appName);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("");
 
-            if(args.Length == 0)
+            if (args.Length == 0)
             {
                 Console.WriteLine("[press any key to exit]");
                 Console.ReadKey();
