@@ -1,16 +1,16 @@
 # Manage custom polices in Azure AD B2C using Graph API
 
-This is a sample command line tool that demonstrates managing custom trust framework policies (custom policy for short) in an Azure AD B2C tenant.  [Custom policy](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-overview-custom) allows you to customize every aspect of the authentication flow.
+This is a sample command line tool that demonstrates managing custom trust framework policies (custom policy for short) and Policy keys in an Azure AD B2C tenant.  [Custom policy](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-overview-custom) allows you to customize every aspect of the authentication flow. Azure AD B2C uses [Policy keys](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started-custom#create-the-encryption-key) to manage your secrets.
 
 ## Features
 
 This sample demonstrates the following:
 
-* **Create** a custom policy
-* **Read** details of a custom policy
-* **Update** a custom policy
-* **Delete** a custom policy
-* **List** all custom policies
+* **Create** a custom policy or Keyset
+* **Read** details of a custom policy or Keyset
+* **Update** a custom policy or Keyset
+* **Delete** a custom policy or Keyset
+* **List** all custom policies or Keyset
 
 ## Getting Started
 

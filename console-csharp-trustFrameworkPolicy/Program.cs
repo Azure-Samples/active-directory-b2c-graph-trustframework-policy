@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -154,7 +155,7 @@ namespace console_csharp_trustframeworkpolicy
 
         public static void Print(HttpRequestMessage request)
         {
-            if(request != null)
+            if (request != null)
             {
                 Console.Write(request.Method + " ");
                 Console.WriteLine(request.RequestUri);
@@ -182,7 +183,7 @@ namespace console_csharp_trustframeworkpolicy
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("");
 
-            if(args.Length == 0)
+            if (args.Length == 0)
             {
                 Console.WriteLine("[press any key to exit]");
                 Console.ReadKey();
