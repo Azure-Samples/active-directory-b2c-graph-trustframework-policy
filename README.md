@@ -1,4 +1,5 @@
 # Manage custom polices in Azure AD B2C using Graph API
+[!NOTE] This feature is now in public preview
 
 This is a sample command line tool that demonstrates managing custom trust framework policies (custom policy for short) and Policy keys in an Azure AD B2C tenant.  [Custom policy](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-overview-custom) allows you to customize every aspect of the authentication flow. Azure AD B2C uses [Policy keys](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started-custom#create-the-encryption-key) to manage your secrets.
 
@@ -18,7 +19,6 @@ This sample demonstrates the following:
 
 This sample requires the following:
 
-* Request access to the private preview.  This API is in private preview and must be enabled for your test tenant.  Please contact [AADB2CPreview@microsoft.com](mailto:AADB2CPreview@microsoft.com) with the name of your test tenant and 'custom policy APIs' in the title of your email.  This feature is not yet ready for production tenants.
 * [Visual Studio](https://www.visualstudio.com/en-us/downloads)
 * [Azure AD B2C tenant](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started)
 
@@ -47,9 +47,6 @@ This sample requires the following:
 1. Using cmd or PowerShell, navigate to <Path to sample code>/bin/Debug. Run the executable **B2CPolicyClient.exe**.
 1. Sign in as a global administrator.  (for example: admin@myb2ctenant.onmicrosoft.com)
 1. The output will show the results of calling the Graph API for trustFrameworkPolices.
-
->[!NOTE]
-> If you see `Unauthorized. Access to this Api requires feature: EnableIEFPoliciesGraphApis` then your tenant has not been enabled for this private preview.  Please see [Prerequisites](#Prerequisites).
 
 ## Questions and comments
 
