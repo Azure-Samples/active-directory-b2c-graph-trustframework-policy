@@ -22,7 +22,6 @@ This sample requires the following:
 * [Visual Studio](https://www.visualstudio.com/en-us/downloads)
 * [Azure AD B2C tenant](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started)
 
-**NOTE: This API only accepts user tokens, and not application tokens. See more information below about Delegated Permissions.**
 
 ### Quickstart
 
