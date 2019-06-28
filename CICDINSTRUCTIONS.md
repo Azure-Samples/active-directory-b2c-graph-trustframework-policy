@@ -12,6 +12,10 @@ This sample requires the following:
 * [Azure AD B2C tenant](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started)
 
 
+### Fundamentals 
+The instructions use client credential flow to get a token. The token is then used to call Microsoft Graph apis.
+
+
 ### Create a web application in Azure AD
 1. Sign in to the [Azure Portal](https://portal.azure.com/) using your Microsoft account.
 1. Go to your Azure AD B2C tenant. you can do this by selecting book binding icon in top right corner portal.
@@ -50,6 +54,7 @@ This sample requires the following:
 1. In your project, navigate to the 'Release' page under 'Pipelines'. Then choose the action to create a new pipeline.
 1. Select 'Empty Job' at the top of navigation pane to choose a template.
 1. In the next screen, enter a name for the stage such as 'DeployCustomPolicies'
+1. Add an artifact to the pipeline, follow prompts and choose your repo.
 1. Switch to 'Variables' tab.
 1. Add following variables
     1. Name: clientId, Value: 'applicationId of the app you created earlier'
@@ -63,10 +68,10 @@ This sample requires the following:
 1. Enter following values 
     1. Task Version: 1.*
     1. Type : File Path
-    1. Script Path: 'Scripts/DeployToB2C.ps1'
+    1. Script Path: '$(System.DefaultWorkingDirectory)/<yourartifactname>/Scripts/DeployToB2C.ps1'
         - this is the path to the script file you had added earlier. 
-    1. Arguments: -ClientID $(clientId) -ClientSecret $(clientSecret) -TenantId $(tenantId) -PolicyId B2C_1A_TrustFrameworkBase -PathToFile B2CAssets\TrustFrameworkBase.xml
+    1. Arguments: -ClientID $(clientId) -ClientSecret $(clientSecret) -TenantId $(tenantId) -PolicyId B2C_1A_TrustFrameworkBase -PathToFile $(System.DefaultWorkingDirectory)/<yourartifactname>/B2CAssets/TrustFrameworkBase.xml
+        - Choose policy names and file path accordingly. 
+1. Save the pipeline. 
+1. Create release and run the pipeline. You can check results if the deployment was successful. 
 
-
-
--ClientID $(clientId) -ClientSecret $(clientSecret) -TenantId $(devTenantId) -PolicyId B2C_1A_TrustFrameworkBase -PathToFile B2CAssets\BalloonsTraders.onmicrosoft.com\TrustFrameworkBase.xml

@@ -27,6 +27,8 @@ catch
 {
     Write-Host "StatusCode:" $_.Exception.Response.StatusCode.value__ 
     
+    $_
+    
     $streamReader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
     $ErrResp = $streamReader.ReadToEnd()
     $streamReader.Close()
