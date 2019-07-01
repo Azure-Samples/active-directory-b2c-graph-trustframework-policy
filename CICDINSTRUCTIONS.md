@@ -2,7 +2,7 @@
 
 This guide shows how to use Microsoft Graph apis for managing custom policies to deploy custom policies as part of your Azure DevOps pipeline. 
 
-## [!Note]: CI/CD functionality is in private preview. To get access for trying out this feature, please send a email to aadb2cpreview@microsoft.com with your tenant name that you want enabled. </Warning>
+## [!Note]: CI/CD functionality is in private preview. To get access for trying out this feature, please send a email to aadb2cpreview@microsoft.com with your tenant name that you want enabled.
 
 
 ## Getting started
@@ -57,7 +57,7 @@ The instructions use client credential flow to get a token. The token is then us
 1. In your project, navigate to the 'Release' page under 'Pipelines'. Then choose the action to create a new pipeline.
 1. Select 'Empty Job' at the top of navigation pane to choose a template.
 1. In the next screen, enter a name for the stage such as 'DeployCustomPolicies'
-1. Add an artifact to the pipeline, follow prompts and choose your repo.
+1. Add an artifact to the pipeline, follow prompts and choose your repo. For this guide, the repo should be a git repo. 
 1. Switch to 'Variables' tab.
 1. Add following variables
     1. Name: clientId, Value: 'applicationId of the app you created earlier'
@@ -66,7 +66,7 @@ The instructions use client credential flow to get a token. The token is then us
     1. Name: tenantId, Value: 'yourtenant.onmicrosoft.com'
     
 1. Switch to Tasks tab
-1. Select Agent job, from right side search for 'PowerShell' and add it. 
+1. Select Agent job, and then select '+' to add a task to the Agent job. From right side search for 'PowerShell' and add it. There might be multiple 'PowerShell' tasks, such as Azure PowerShell etc. Please choose the one which says just 'PowerShell'.
 1. Select newly added 'PowerShell Script' task.
 1. Enter following values 
     1. Task Version: 1.*
@@ -77,4 +77,5 @@ The instructions use client credential flow to get a token. The token is then us
         - Choose policy names and file path accordingly. 
 1. Save the pipeline. 
 1. Create release and run the pipeline. You can check results if the deployment was successful. 
+1. This sample uploads only one policy. Feel free to modify the PowerShell script to upload more policies. Or you can add the same task with different parameters multiple times.
 
