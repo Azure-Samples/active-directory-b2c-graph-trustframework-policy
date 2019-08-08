@@ -2,9 +2,6 @@
 
 This guide shows how to use Microsoft Graph apis for managing custom policies to deploy custom policies as part of your Azure DevOps pipeline. 
 
-## [!Note]: CI/CD functionality is in private preview. To get access for trying out this feature, please send a email to aadb2cpreview@microsoft.com with your tenant name that you want enabled.
-
-
 ## Getting started
 
 ### Prerequisites
