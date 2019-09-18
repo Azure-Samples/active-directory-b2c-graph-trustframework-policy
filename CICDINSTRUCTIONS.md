@@ -68,9 +68,9 @@ The instructions use client credential flow to get a token. The token is then us
 1. Enter following values 
     1. Task Version: 1.*
     1. Type : File Path
-    1. Script Path: '$(System.DefaultWorkingDirectory)/-yourartifactalias-/Scripts/DeployToB2C.ps1'
+    1. Script Path: '$(System.DefaultWorkingDirectory)/yourartifactalias/Scripts/DeployToB2C.ps1'
         - this is the path to the script file you had added earlier. 
-    1. Arguments: -ClientID $(clientId) -ClientSecret $(clientSecret) -TenantId $(tenantId) -PolicyId B2C_1A_TrustFrameworkBase -PathToFile $(System.DefaultWorkingDirectory)/-yourartifactalias-/B2CAssets/TrustFrameworkBase.xml
+    1. Arguments: -ClientID $(clientId) -ClientSecret $(clientSecret) -TenantId $(tenantId) -PolicyId B2C_1A_TrustFrameworkBase -PathToFile $(System.DefaultWorkingDirectory)/yourartifactalias/B2CAssets/TrustFrameworkBase.xml
         - Choose policy names and file path accordingly.
         - Your artifact alias can be found at the bottom of your Artifacts settings as "Source alias" looks like this: _NameOfMyProject
 1. Save the pipeline. 
